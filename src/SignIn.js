@@ -3,8 +3,8 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Checkbox from '@mui/material/Checkbox';
 import CssBaseline from '@mui/material/CssBaseline';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import FormLabel from '@mui/material/FormLabel';
+import FormControlLabel from '@mui/material/FormControlLabel'; // Import FormControlLabel
+import FormLabel from '@mui/material/FormLabel'; // Import FormLabel
 import FormControl from '@mui/material/FormControl';
 import Link from '@mui/material/Link';
 import TextField from '@mui/material/TextField';
@@ -17,13 +17,12 @@ import IconButton from '@mui/material/IconButton';
 import PersonIcon from '@mui/icons-material/Person';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import VpnKeyIcon from '@mui/icons-material/VpnKey';
 import ForgotPassword from './ForgotPassword';
 import getSignInTheme from './theme/getSignInTheme';
-import '@fontsource/roboto';  // Defaults to weight 400
-import VpnKeyIcon from '@mui/icons-material/VpnKey';  // Import the key icon
+import '@fontsource/roboto'; // Ensures Roboto is available globally
 
-
-
+// Styled Components
 const Card = styled(MuiCard)(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
@@ -35,8 +34,7 @@ const Card = styled(MuiCard)(({ theme }) => ({
   [theme.breakpoints.up('sm')]: {
     maxWidth: '430px',
   },
-  boxShadow:
-    'hsla(220, 30%, 5%, 0.05) 0px 5px 10px 0px, hsla(220, 25%, 10%, 0.05) 0px 15px 35px -5px',
+  boxShadow: '0px 5px 10px 0px rgba(0, 0, 0, 0.05)',
 }));
 
 const SignInContainer = styled(Stack)(({ theme }) => ({
@@ -48,29 +46,26 @@ const SignInContainer = styled(Stack)(({ theme }) => ({
   backgroundRepeat: 'no-repeat',
   ...theme.applyStyles('dark', {
     backgroundImage:
-      'radial-gradient(at 50% 50%, hsla(210, 100%, 20%, 0.5), hsl(220, 30%, 5%))',
+      'radial-gradient(at 50% 50%, hsla(210, 100%, 33%, 0.5), hsl(220, 30%, 5%))',
   }),
 }));
 
-
-
-const SignInTheme = createTheme(getSignInTheme('dark'),{
+const SignInTheme = createTheme(getSignInTheme('dark'), {
   typography: {
-    fontFamily: 'Roboto, Arial, sans-serif',  // Ensures Roboto is used as the default font
+    fontFamily: 'Roboto, Arial, sans-serif',
     body1: {
-      fontSize: '16px',  // You can adjust this for regular text
+      fontSize: '16px',
     },
     h2: {
-      fontSize: '1.75rem',  // Adjust the size for the heading
+      fontSize: '1.75rem',
       fontWeight: 'bold',
     },
     button: {
-      fontSize: '1rem',  // Adjust for button font
-      textTransform: 'none',  // Prevents uppercase transformation
+      fontSize: '1rem',
+      textTransform: 'none',
     },
   },
 });
-
 
 export default function SignIn() {
   const [emailError, setEmailError] = React.useState(false);
@@ -80,14 +75,7 @@ export default function SignIn() {
   const [open, setOpen] = React.useState(false);
   const [showPassword, setShowPassword] = React.useState(false);
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
+  // Toggle Password Visibility
   const handleTogglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
@@ -104,10 +92,9 @@ export default function SignIn() {
   const validateInputs = () => {
     const username = document.getElementById('username');
     const password = document.getElementById('password');
-
     let isValid = true;
 
-    if (!username.value || username.value.trim() === "") {
+    if (!username.value || username.value.trim() === '') {
       setEmailError(true);
       setEmailErrorMessage('Please enter a valid username.');
       isValid = false;
@@ -133,8 +120,8 @@ export default function SignIn() {
       <CssBaseline enableColorScheme />
       <SignInContainer direction="column" justifyContent="space-between">
         <Card variant="outlined">
-          <Box sx={{ display: 'flex', justifyContent: 'center', mt: 3
-           }}>
+          {/* Logo */}
+          <Box sx={{ display: 'flex', justifyContent: 'center', mt: 3 }}>
             <img
               src="/MainLogo.png"
               alt="Yadeam Logo"
@@ -142,115 +129,100 @@ export default function SignIn() {
             />
           </Box>
 
+          {/* Sign In Heading */}
           <Typography
             component="h2"
             variant="h2"
-            sx={{
-              width: '100%',
-              fontSize: 'clamp(1.2rem, 7vw, 1.7rem)', 
-              fontWeight: 'bold',                   
-              fontFamily: 'Roboto, sans-serif',     
-              mt: '1.6rem',
-            }}
+            sx={{ fontSize: 'clamp(1.2rem, 7vw, 1.7rem)', mt: '1.6rem' }}
           >
             Sign in
           </Typography>
 
+          {/* Form */}
           <Box
             component="form"
             onSubmit={handleSubmit}
             noValidate
-            sx={{
-              display: 'flex',
-              flexDirection: 'column',
-              width: '100%',
-              gap: 2,
-            }}
+            sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}
           >
-            {/* Username field with icon */}
+            {/* Username Field */}
             <FormControl>
               <FormLabel htmlFor="username">Username</FormLabel>
               <TextField
                 error={emailError}
                 helperText={emailErrorMessage}
                 id="username"
-                type="text"
                 name="username"
                 placeholder="username"
-                autoComplete="username"
                 autoFocus
                 required
                 fullWidth
                 variant="outlined"
-                color={emailError ? 'error' : 'primary'}
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="start">
                       <PersonIcon />
                     </InputAdornment>
                   ),
-                  style: { fontSize: '18px' }, 
+                  style: { fontSize: '18px' },
                 }}
               />
             </FormControl>
 
-<FormControl>
-  <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-    <FormLabel htmlFor="password">Password</FormLabel>
-  </Box>
-  <TextField
-    error={passwordError}
-    helperText={passwordErrorMessage}
-    name="password"
-    placeholder="••••••••"
-    type={showPassword ? 'text' : 'password'}
-    id="password"
-    autoComplete="current-password"
-    autoFocus
-    required
-    fullWidth
-    variant="outlined"
-    color={passwordError ? 'error' : 'primary'}
-    InputProps={{
-      startAdornment: (
-        <InputAdornment position="start">
-          {/* You can use a key icon here */}
-          <VpnKeyIcon />
-        </InputAdornment>
-      ),
-      endAdornment: (
-        <InputAdornment position="end">
-          <IconButton onClick={handleTogglePasswordVisibility} edge="end">
-            {showPassword ? (
-              <VisibilityOffIcon style={{ fontSize: '15px' }} />  // Eye icon to toggle visibility
-            ) : (
-              <VisibilityIcon style={{ fontSize: '15px' }} />  // Eye icon to toggle visibility
-            )}
-          </IconButton>
-        </InputAdornment>
-      ),
-      style: { fontSize: '17px' },  // Customize font size inside TextField
-    }}
-  />
-</FormControl>
+            {/* Password Field */}
+            <FormControl>
+              <FormLabel htmlFor="password">Password</FormLabel>
+              <TextField
+                error={passwordError}
+                helperText={passwordErrorMessage}
+                name="password"
+                id="password"
+                type={showPassword ? 'text' : 'password'}
+                placeholder="••••••••"
+                required
+                fullWidth
+                variant="outlined"
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <VpnKeyIcon />
+                    </InputAdornment>
+                  ),
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton onClick={handleTogglePasswordVisibility} edge="end">
+                        {showPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                  style: { fontSize: '17px' },
+                }}
+              />
+            </FormControl>
 
-
-            
-            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mt: -1.5 }}>
+            {/* Remember Me and Forgot Password */}
+            <Box
+              sx={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                mt: -1.5,
+              }}
+            >
               <FormControlLabel
                 control={<Checkbox value="remember" color="primary" />}
                 label="Remember me"
               />
               <Link
                 component="button"
-                onClick={handleClickOpen}
+                onClick={() => setOpen(true)}
                 variant="body2"
               >
                 Forgot your password?
               </Link>
             </Box>
 
-            <ForgotPassword open={open} handleClose={handleClose} />
+            {/* Submit Button */}
             <Button
               type="submit"
               fullWidth
@@ -259,13 +231,13 @@ export default function SignIn() {
             >
               Sign in
             </Button>
+
+            {/* Register Link */}
             <Typography sx={{ textAlign: 'center' }}>
               Don&apos;t have an account?{' '}
-              <span>
-                <Link href="#" variant="body2" sx={{ alignSelf: 'center' }}>
-                  Register
-                </Link>
-              </span>
+              <Link href="#" variant="body2">
+                Register
+              </Link>
             </Typography>
           </Box>
         </Card>
